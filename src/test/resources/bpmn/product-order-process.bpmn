@@ -36,8 +36,8 @@
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1184q7f" sourceRef="Confirm" targetRef="ExclusiveGateway_NotificationConfirmationNeededEnd" />
     <bpmn:sequenceFlow id="SequenceFlow_1gxq773" sourceRef="StartEvent_Notification" targetRef="Create" />
-    <bpmn:sequenceFlow id="SequenceFlow_0enl74a" sourceRef="Approve" targetRef="MilestoneNotificationApproved" />
-    <bpmn:sequenceFlow id="SequenceFlow_1rb2s2r" sourceRef="MilestoneNotificationApproved" targetRef="SubProcess_WO" />
+    <bpmn:sequenceFlow id="SequenceFlow_0enl74a" sourceRef="Approve" targetRef="MilestoneApproved" />
+    <bpmn:sequenceFlow id="SequenceFlow_1rb2s2r" sourceRef="MilestoneApproved" targetRef="SubProcess_WO" />
     <bpmn:userTask id="Create" name="Create" camunda:asyncBefore="true" camunda:formKey="embedded:app:forms/sales/new-notification.html" camunda:assignee="${initiator}" camunda:candidateGroups="${initiatorGroup}">
       <bpmn:documentation>create notfication, add products, select company,installer, packager, set due date, add user information,...</bpmn:documentation>
       <bpmn:extensionElements>
@@ -51,9 +51,10 @@
       <bpmn:incoming>SequenceFlow_0vnfim4</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0enl74a</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:intermediateThrowEvent id="MilestoneNotificationApproved" name="async &#10;milestone">
+    <bpmn:intermediateThrowEvent id="MilestoneApproved" name="async &#10;milestone" camunda:asyncBefore="true">
       <bpmn:extensionElements>
         <camunda:executionListener delegateExpression="${notificationApproved}" event="end" />
+        <camunda:failedJobRetryTimeCycle>R3/PT10S</camunda:failedJobRetryTimeCycle>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0enl74a</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1rb2s2r</bpmn:outgoing>
@@ -244,7 +245,7 @@
           <dc:Bounds x="-321" y="43" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="IntermediateThrowEvent_1gh8rrm_di" bpmnElement="MilestoneNotificationApproved">
+      <bpmndi:BPMNShape id="IntermediateThrowEvent_1gh8rrm_di" bpmnElement="MilestoneApproved">
         <dc:Bounds x="-42" y="0" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="-69" y="36" width="90" height="20" />

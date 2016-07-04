@@ -89,7 +89,6 @@ public class BpmValidationTest {
                 .isAssignedTo(groupCPerson);
 
         complete(task(), Variables.createVariables().putValue("confirmationRequired", Boolean.FALSE)
-                                                    .putValue("localInstallation", "Installer")
                                                     .putValue("groupA", groupA)
                                                     .putValue("groupB", groupB));
 
