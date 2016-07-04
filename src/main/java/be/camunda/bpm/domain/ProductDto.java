@@ -7,6 +7,10 @@ public class ProductDto implements Serializable {
 
     private boolean requiresPlanning;
 
+    public ProductDto() {
+        super();
+    }
+
     public ProductDto(boolean requiresPlanning) {
         this.requiresPlanning = requiresPlanning;
     }

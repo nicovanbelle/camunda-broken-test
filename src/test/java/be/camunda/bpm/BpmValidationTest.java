@@ -1,8 +1,8 @@
 package be.camunda.bpm;
 
 import be.camunda.bpm.delegate.InitProduct;
-import be.camunda.bpm.domain.ProductDto;
 import be.camunda.bpm.delegate.NotificationApproved;
+import be.camunda.bpm.domain.ProductDto;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
@@ -18,7 +18,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.assertThat;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
@@ -102,11 +103,14 @@ public class BpmValidationTest {
                 .isAssignedTo(groupCPerson)
                 .hasDueDate(startTime.plusDays(14).toDate());
 
-        ProductDto product = new ProductDto(true);
+        List<ProductDto> products = new ArrayList<>();
+        products.add(new ProductDto(true));
 
         complete(claim(task(), groupCPerson),
                 Variables.createVariables()
-                .putValue("woProducts", Collections.singletonList(product)));
+                .putValue("woProducts", products));
+
+        execute(job());
 
         // Assert subProcesses
 
